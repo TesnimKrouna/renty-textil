@@ -1,0 +1,119 @@
+<div class="signup-page">
+
+  <div class="left-panel">
+
+    <img src="/img/logo.png" alt="Renty" class="brand-logo">
+
+    <h1>
+      Uniformes professionnels
+      <span>sur mesure</span>
+    </h1>
+
+    <p>
+      Commandez facilement des uniformes personnalisés
+      pour vos restaurants, hôtels, entreprises et événements.
+    </p>
+
+  </div>
+
+  <div class="right-panel">
+
+    <div class="form-card">
+
+      <h2>Créer un compte</h2>
+
+      <p class="subtitle">
+        Rejoignez la plateforme Renty Textile
+      </p>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <div class="field">
+          <label>Nom complet</label>
+          <input type="text" formControlName="nomComplet">
+        </div>
+
+        <div class="field">
+          <label>Entreprise</label>
+          <input type="text" formControlName="nomEntreprise">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" formControlName="email">
+        </div>
+
+        <div class="field">
+          <label>Téléphone</label>
+          <input type="tel" formControlName="telephone">
+        </div>
+
+        <div class="field">
+          <label>Adresse</label>
+          <input type="text" formControlName="adresse">
+        </div>
+
+        <div class="field">
+          <label>Matricule fiscale</label>
+          <input type="text" formControlName="matriculeFiscale">
+        </div>
+
+        <div class="field full-width">
+          <label>Logo de l'entreprise</label>
+
+          <label for="logo" class="upload-box">
+            <div class="upload-icon">⬆</div>
+            <div>Ajouter votre logo</div>
+          </label>
+
+          <input
+            id="logo"
+            type="file"
+            class="hidden-file"
+            (change)="onFileSelected($event)">
+        </div>
+
+        @if(previewUrl){
+          <div class="full-width">
+            <img
+              [src]="previewUrl"
+              class="logo-preview"
+              alt="preview">
+          </div>
+        }
+
+        <div class="field">
+          <label>Mot de passe</label>
+          <input
+            type="password"
+            formControlName="password">
+        </div>
+
+        <div class="field">
+          <label>Confirmer</label>
+          <input
+            type="password"
+            formControlName="confirmPassword">
+        </div>
+
+        <button
+          type="submit"
+          class="btn full-width">
+
+          {{ loading ? 'Création...' : 'Créer un compte' }}
+
+        </button>
+
+      </form>
+
+      <div class="switch-line">
+        <a routerLink="/login">
+          Déjà un compte ? Se connecter
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
