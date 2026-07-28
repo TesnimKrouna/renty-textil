@@ -1,0 +1,120 @@
+<h2>Projets</h2>
+
+<!-- Barre de recherche -->
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="🔍 Rechercher un projet..." />
+</div>
+
+<!-- Formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un projet' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Nom du projet</span>
+        <input type="text" [(ngModel)]="newProject.name" placeholder="Nom du projet" />
+      </label>
+
+      <label class="field">
+        <span>Date de début</span>
+        <input type="date" [(ngModel)]="newProject.startDate" />
+      </label>
+
+      <label class="field">
+        <span>Date de fin</span>
+        <input type="date" [(ngModel)]="newProject.endDate" />
+      </label>
+
+      <label class="field">
+        <span>Employé ID</span>
+        <input type="number" [(ngModel)]="newProject.employeeId" placeholder="Employé ID" />
+      </label>
+
+      <label class="field">
+        <span>Client ID</span>
+        <input type="number" [(ngModel)]="newProject.clientId" placeholder="Client ID" />
+      </label>
+
+      <label class="field">
+        <span>Description</span>
+        <input type="text" [(ngModel)]="newProject.description" placeholder="Description" />
+      </label>
+
+      <button (click)="addProject()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+
+<!-- Tableau des projets -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Date début</th>
+      <th>Date fin</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of filteredItems; track item.id) {
+      <tr>
+        <td>{{ item.id }}</td>
+
+        <!-- Nom -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Nom</span>
+              <input type="text" [(ngModel)]="editItem.name" />
+            </label>
+          } @else { {{ item.name }} }
+        </td>
+
+        <!-- Date début -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Date de début</span>
+              <input type="date" [(ngModel)]="editItem.startDate" />
+            </label>
+          } @else { {{ item.startDate | date:'shortDate' }} }
+        </td>
+
+        <!-- Date fin -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Date de fin</span>
+              <input type="date" [(ngModel)]="editItem.endDate" />
+            </label>
+          } @else { {{ item.endDate | date:'shortDate' }} }
+        </td>
+
+        <!-- Description -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Description</span>
+              <input type="text" [(ngModel)]="editItem.description" />
+            </label>
+          } @else { {{ item.description }} }
+        </td>
+
+        <!-- Actions -->
+        <td>
+          @if (editingId === item.id) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(item)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

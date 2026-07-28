@@ -1,0 +1,354 @@
+/* ============================================
+   RENTY TEXTILE - SECTION FACTURE
+   ============================================ */
+:host {
+  display: block;
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: 100%;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 1.5rem 0 1rem;
+}
+
+/* --- Formulaire principal --- */
+.invoice-form {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* --- Champs de formulaire avec labels --- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 200px;
+}
+
+.field span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.field input,
+.field select,
+.field textarea {
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+}
+
+.field textarea {
+  height: auto;
+  min-height: 80px;
+  padding: 0.5rem 0.75rem;
+  resize: vertical;
+}
+
+.field input[readonly] {
+  background: #f9fafb;
+  color: #374151;
+  cursor: default;
+}
+
+/* --- Tableau des lignes de produits --- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+
+thead tr {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+  text-align: left;
+}
+
+td {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+td input,
+td select {
+  width: 100%;
+  height: 38px;
+  padding: 0 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+td input:focus,
+td select:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+}
+
+td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: #dc2626;
+}
+
+td button:hover {
+  background: #f3f4f6;
+}
+
+/* --- Bouton d'ajout de ligne --- */
+.btn-add-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  color: #374151;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.btn-add-line:hover {
+  background: #e5e7eb;
+  border-color: #6b7280;
+}
+
+/* --- Section des totaux --- */
+.totals {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+/* --- Bouton de génération PDF --- */
+.btn-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #e5c11a;
+  color: #1a1a1a;
+  border: none;
+  height: 48px;
+  padding: 0 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 1rem;
+}
+
+.btn-save:hover {
+  background: #c9a818;
+  transform: translateY(-1px);
+}
+
+/* --- Aperçu de la facture (pour le PDF) --- */
+.invoice-preview {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.invoice-preview h1 {
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.invoice-preview p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.invoice-preview table {
+  margin: 1.5rem 0;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #d1d5db;
+}
+
+.invoice-preview th {
+  background: #f3f4f6;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid #d1d5db;
+}
+
+.invoice-preview td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.invoice-preview tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  :host {
+    padding: 1rem;
+  }
+
+  .invoice-form {
+    padding: 1.25rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .field {
+    flex: 1 1 100%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+/* --- Upload de cachet --- */
+.cachet-upload {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cachet-upload input[type="file"] {
+  display: none;
+}
+
+.file-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 44px;
+  padding: 0 1.25rem;
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.file-label:hover {
+  background: #e5e7eb;
+  border-color: #6b7280;
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: #059669;
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.btn-remove:hover {
+  background: #fee2e2;
+}
+
+/* --- Cachet dans l'aperçu PDF --- */
+.cachet-section {
+  text-align: right;
+  margin-top: 2rem;
+  opacity: 0.88;
+}
+
+.cachet-img {
+  width: 130px;
+  height: auto;
+}

@@ -1,0 +1,252 @@
+/* ============================================
+   RENTY TEXTILE - DASHBOARD LAYOUT (AVEC TOPBAR)
+   ============================================ */
+
+/* Conteneur principal de l'application */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Barre supérieure --- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  min-height: 56px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 1.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  z-index: 200;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Boutons de la topbar */
+.topbar-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.topbar-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Barre de recherche dans la topbar */
+.topbar-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.topbar-search input {
+  width: 100%;
+  max-width: 400px;
+  height: 38px;
+  padding: 0 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  background: #f9fafb;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.topbar-search input:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+  background: #ffffff;
+}
+
+.topbar-search input::placeholder {
+  color: #9ca3af;
+}
+
+/* --- Menus déroulants de la topbar --- */
+.topbar-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem 0;
+  min-width: 220px;
+  z-index: 300;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+/* --- Dashboard (sidebar + main) --- */
+.dashboard {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: width 0.35s ease, min-width 0.35s ease, padding 0.35s ease, opacity 0.35s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 0;
+  min-width: 0;
+  padding: 20px 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  overflow: hidden;
+}
+
+/* Bouton de toggle (fermeture) */
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.toggle-btn:hover {
+  background: #334155;
+}
+
+/* Boutons de navigation */
+.sidebar button:not(.toggle-btn):not(.logout-btn) {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #334155;
+  color: white;
+  transition: background 0.3s, transform 0.2s;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar button:not(.toggle-btn):not(.logout-btn):hover {
+  background: #475569;
+}
+
+/* Bouton actif */
+.sidebar button.active {
+  background: #475569;
+  font-weight: 600;
+  box-shadow: inset 4px 0 0 #e5c11a;
+}
+
+/* --- Bouton logout en bas de la sidebar --- */
+.logout-btn {
+  margin-top: auto;
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s, transform 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+/* --- Contenu principal --- */
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #f8fafc;
+  overflow-y: auto;
+  position: relative;
+  transition: margin-left 0.35s ease;
+}
+
+/* --- Bouton flottant pour rouvrir la sidebar --- */
+.toggle-btn.floating {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  background: #1e293b;
+  color: white;
+  font-size: 1.6rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

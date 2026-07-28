@@ -1,0 +1,163 @@
+<h2>Création d'une facture</h2>
+
+<div class="invoice-form">
+  <!-- En-tête -->
+  <div class="form-row">
+    <label class="field">
+      <span>Client</span>
+      <select [(ngModel)]="invoice.clientId" (change)="onClientChange(invoice.clientId)">
+        <option [ngValue]="0" disabled>Choisir un client</option>
+        @for (client of clients; track client.id) {
+          <option [ngValue]="client.id">{{ client.name }}</option>
+        }
+      </select>
+    </label>
+    <label class="field">
+      <span>Taux TVA (%)</span>
+      <input type="number" [(ngModel)]="invoice.tauxTva" step="0.01" (input)="calculateTotals()" />
+    </label>
+  </div>
+
+  <!-- Lignes de produits -->
+  <h3>Produits / Services</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Qté</th>
+        <th>Prix unitaire</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of invoice.items; track $index; let i = $index) {
+        <tr>
+          <td>
+            <select [(ngModel)]="item.produitId" (change)="onProductChange(i, item.produitId)">
+              <option [ngValue]="0" disabled>Choisir un produit</option>
+              @for (product of products; track product.id) {
+                <option [ngValue]="product.id">{{ product.name }}</option>
+              }
+            </select>
+          </td>
+          <td><input type="number" [(ngModel)]="item.quantite" (input)="updateLineTotal(i)" /></td>
+          <td><input type="number" [(ngModel)]="item.prixUnitaire" (input)="updateLineTotal(i)" /></td>
+          <td>{{ item.total | currency:'EUR' }}</td>
+          <td><button (click)="removeLine(i)">🗑️</button></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <button (click)="addLine()" class="btn-add-line">＋ Ajouter une ligne</button>
+
+  <!-- Remise -->
+  <div class="form-row">
+    <label class="field">
+      <span>Type de remise</span>
+      <select [(ngModel)]="invoice.typeRemise" (change)="calculateTotals()">
+        <option value="percentage">Pourcentage (%)</option>
+        <option value="fixed">Montant fixe</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>Remise</span>
+      <input type="number" [(ngModel)]="invoice.remise" (input)="calculateTotals()" />
+    </label>
+  </div>
+
+  <!-- Totaux -->
+  <div class="form-row totals">
+    <label class="field">
+      <span>Total HT</span>
+      <input type="text" [value]="invoice.totalHT | currency:'EUR'" readonly />
+    </label>
+    <label class="field">
+      <span>Total TTC</span>
+      <input type="text" [value]="invoice.totalTTC | currency:'EUR'" readonly />
+    </label>
+  </div>
+
+  <!-- Signature et statut -->
+  <div class="form-row">
+    <label class="field">
+      <span>Signature</span>
+      <input type="text" [(ngModel)]="invoice.signature" placeholder="Nom du signataire" />
+    </label>
+    <label class="field">
+      <span>Statut</span>
+      <select [(ngModel)]="invoice.status">
+        <option value="draft">Brouillon</option>
+        <option value="sent">Envoyée</option>
+        <option value="paid">Payée</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Cachet / Tampon -->
+  <div class="form-row">
+    <label class="field">
+      <span>Cachet / Tampon</span>
+      <div class="cachet-upload">
+        <input
+          id="cachet-input"
+          type="file"
+          accept="image/png, image/jpeg, image/svg+xml"
+          (change)="onCachetSelected($event)"
+        />
+        <label for="cachet-input" class="file-label">
+          📎 Choisir un cachet
+        </label>
+        @if (cachetFileName) {
+          <span class="file-name">{{ cachetFileName }}</span>
+        }
+        @if (cachetUrl) {
+          <button type="button" class="btn-remove" (click)="removeCachet()">✕</button>
+        }
+      </div>
+    </label>
+  </div>
+
+  <button (click)="generatePDF()" class="btn-save">📄 Générer PDF</button>
+</div>
+
+<!-- Aperçu de la facture (capturé pour le PDF) -->
+<div id="invoice-preview" class="invoice-preview">
+  <h1>Facture</h1>
+  <p>Client : {{ invoice.clientName }}</p>
+  <p>Date : {{ invoice.createdAt | date:'longDate' }}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Qté</th>
+        <th>P.U.</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of invoice.items; track $index) {
+        <tr>
+          <td>{{ item.produitNom }}</td>
+          <td>{{ item.quantite }}</td>
+          <td>{{ item.prixUnitaire | currency:'EUR' }}</td>
+          <td>{{ item.total | currency:'EUR' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <p>Total HT : {{ invoice.totalHT | currency:'EUR' }}</p>
+  <p>TVA ({{ invoice.tauxTva * 100 }}%)</p>
+  <p>Total TTC : {{ invoice.totalTTC | currency:'EUR' }}</p>
+  <p>Signature : {{ invoice.signature }}</p>
+  <p>Statut : {{ invoice.status }}</p>
+
+  <!-- Cachet dans l'aperçu -->
+  @if (cachetUrl) {
+    <div class="cachet-section">
+      <img [src]="cachetUrl" alt="Cachet" class="cachet-img" />
+    </div>
+  }
+</div>

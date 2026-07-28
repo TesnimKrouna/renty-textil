@@ -1,0 +1,127 @@
+<h2>Utilisateurs</h2>
+
+
+
+<!-- Filtres -->
+<div class="filters">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="🔍 Rechercher par nom, email..." />
+  <select [(ngModel)]="selectedRole">
+    <option value="">Tous les rôles</option>
+    @for (role of roles; track role) {
+      <option [value]="role">{{ role }}</option>
+    }
+  </select>
+</div>
+<!-- Bouton et formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un utilisateur' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Nom complet</span>
+        <input type="text" [(ngModel)]="newUser.name" placeholder="Nom complet" />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" [(ngModel)]="newUser.email" placeholder="Email" />
+      </label>
+
+      <label class="field">
+        <span>Rôle</span>
+        <select [(ngModel)]="newUser.role">
+          @for (role of roles; track role) {
+            <option [value]="role">{{ role }}</option>
+          }
+        </select>
+      </label>
+
+      <!-- Checkboxes de tâches -->
+      <fieldset class="field tasks-field">
+        <legend>Tâches à assigner</legend>
+        @for (task of availableTasks; track task) {
+          <label class="checkbox-label">
+            <input type="checkbox" (change)="onNewUserTaskChange(task, $event)" />
+            {{ task }}
+          </label>
+        }
+      </fieldset>
+
+      <button (click)="addUser()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+<!-- Tableau -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Rôle</th>
+      <th>Tâches</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of filteredUsers; track user.id) {
+      <tr>
+        <td>{{ user.id }}</td>
+        <td (dblclick)="startEdit(user)">
+          @if (editingId === user.id) {
+            <input type="text" [(ngModel)]="editUser.name" />
+          } @else { {{ user.name }} }
+        </td>
+        <td (dblclick)="startEdit(user)">
+          @if (editingId === user.id) {
+            <input type="email" [(ngModel)]="editUser.email" />
+          } @else { {{ user.email }} }
+        </td>
+        <td (dblclick)="startEdit(user)">
+          @if (editingId === user.id) {
+            <select [(ngModel)]="editUser.role">
+              @for (role of roles; track role) {
+                <option [value]="role">{{ role }}</option>
+              }
+            </select>
+          } @else {
+            <span class="badge">{{ user.role }}</span>
+          }
+        </td>
+        <td (dblclick)="startEdit(user)">
+          @if (editingId === user.id) {
+            <div class="tasks-checkboxes">
+              @for (task of availableTasks; track task) {
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    [checked]="editTasks.includes(task)"
+                    (change)="onEditTaskChange(task, $event)"
+                  />
+                  {{ task }}
+                </label>
+              }
+            </div>
+          } @else {
+            @if (user.tasks?.length) {
+              <span class="task-list">{{ user.tasks.join(', ') }}</span>
+            } @else {
+              <span class="no-tasks">Aucune</span>
+            }
+          }
+        </td>
+        <td>
+          @if (editingId === user.id) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(user)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

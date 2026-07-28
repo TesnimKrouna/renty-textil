@@ -1,0 +1,340 @@
+/* ============================================
+   RENTY TEXTILE - SECTION UTILISATEURS
+   ============================================ */
+:host {
+  display: block;
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: 100%;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filters input {
+  height: 48px;
+  padding: 0 1.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  font-size: 0.9375rem;
+  background: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  min-width: 240px;
+}
+
+.filters input:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 4px rgba(229,193,26,0.2);
+}
+
+.filters select {
+  height: 48px;
+  padding: 0 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  font-size: 0.9375rem;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 4px rgba(229,193,26,0.2);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+thead tr { background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+
+th {
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+  text-align: left;
+}
+
+td {
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+}
+
+tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #fafaf5; }
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #1f2937;
+}
+
+td input, td select {
+  width: 100%;
+  height: 36px;
+  padding: 0 0.6rem;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+td input:focus, td select:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229,193,26,0.25);
+}
+
+td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.35rem;
+  margin-right: 0.3rem;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+td button:hover { background: #f3f4f6; transform: scale(1.15); }
+td button:active { transform: scale(0.95); }
+
+td button:first-child { color: #059669; }
+td button:nth-child(2) { color: #dc2626; }
+td button:last-child { color: #e5c11a; }
+/* --- Tâches dans le formulaire d'ajout --- */
+.tasks-field {
+  flex: 1 1 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.tasks-field legend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: #e5c11a;
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Colonne des tâches dans le tableau --- */
+.task-list {
+  font-size: 0.85rem;
+  background: #f3f4f6;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+.no-tasks {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.tasks-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 300px;
+}
+@media (max-width: 1024px) {
+  :host { padding: 1.5rem; }
+  .filters { flex-direction: column; }
+  .filters input, .filters select { max-width: 100%; width: 100%; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+/* ============================================
+   FORMULAIRE D'AJOUT - UTILISATEURS
+   ============================================ */
+
+/* Conteneur du bouton d'ouverture */
+.add-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Boutons standardisés (Fermer / Enregistrer) */
+.btn-add-toggle,
+.btn-save {
+  height: 44px;                    /* hauteur identique */
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.btn-add-toggle {
+  background: #e5c11a;
+  color: #1a1a1a;
+}
+
+.btn-add-toggle:hover {
+  background: #c9a818;
+  transform: translateY(-1px);
+}
+
+.btn-save {
+  background: #059669;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Formulaire d'ajout */
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* Chaque champ avec son label */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 200px;               /* légèrement plus large que les autres sections pour les intitulés */
+}
+
+.field span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Champs de saisie et select */
+.field input,
+.field select {
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+}
+
+/* Fieldset des tâches */
+.tasks-field {
+  flex: 1 1 100%;                /* occupe toute la largeur */
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin: 0;                     /* annule les marges par défaut */
+}
+
+.tasks-field legend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+/* Checkboxes */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: #e5c11a;
+  width: 16px;
+  height: 16px;
+}
+
+/* Bouton Enregistrer dans le flux */
+.add-form .btn-save {
+  flex: 0 0 auto;                /* ne s'étire pas */
+  align-self: flex-end;          /* aligné en bas */
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .add-form {
+    padding: 1rem;
+  }
+  .field {
+    flex: 1 1 100%;
+  }
+}

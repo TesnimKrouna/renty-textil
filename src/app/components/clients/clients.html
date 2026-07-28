@@ -1,0 +1,144 @@
+<h2>Clients</h2>
+
+<!-- Barre de recherche -->
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="🔍 Rechercher un client..." />
+</div>
+
+<!-- Formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un client' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Nom</span>
+        <input type="text" [(ngModel)]="newClient.name" placeholder="Nom" />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" [(ngModel)]="newClient.email" placeholder="Email" />
+      </label>
+
+      <label class="field">
+        <span>Téléphone</span>
+        <input type="text" [(ngModel)]="newClient.phone" placeholder="Téléphone" />
+      </label>
+
+      <label class="field">
+        <span>Société</span>
+        <input type="text" [(ngModel)]="newClient.company" placeholder="Société" />
+      </label>
+
+      <label class="field">
+        <span>Domaine</span>
+        <input type="text" [(ngModel)]="newClient.domain" placeholder="Domaine" />
+      </label>
+
+      <label class="field">
+        <span>IDs projets (ex: 1,2)</span>
+        <input type="text" [(ngModel)]="newProjectIds" placeholder="IDs projets (ex: 1,2)" />
+      </label>
+
+      <button (click)="addClient()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+
+<!-- Tableau des clients -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Société</th>
+      <th>Domaine</th>
+      <th>Projets</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of filteredItems; track item.id) {
+      <tr>
+        <td>{{ item.id }}</td>
+
+        <!-- Nom -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Nom</span>
+              <input type="text" [(ngModel)]="editItem.name" />
+            </label>
+          } @else { {{ item.name }} }
+        </td>
+
+        <!-- Email -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Email</span>
+              <input type="email" [(ngModel)]="editItem.email" />
+            </label>
+          } @else { {{ item.email }} }
+        </td>
+
+        <!-- Téléphone -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Téléphone</span>
+              <input type="text" [(ngModel)]="editItem.phone" />
+            </label>
+          } @else { {{ item.phone }} }
+        </td>
+
+        <!-- Société -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Société</span>
+              <input type="text" [(ngModel)]="editItem.company" />
+            </label>
+          } @else { {{ item.company }} }
+        </td>
+
+        <!-- Domaine -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Domaine</span>
+              <input type="text" [(ngModel)]="editItem.domain" />
+            </label>
+          } @else { {{ item.domain }} }
+        </td>
+
+        <!-- Projets -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">IDs projets</span>
+              <input type="text" [(ngModel)]="editProjectIds" placeholder="1,2,3" />
+            </label>
+          } @else {
+            {{ item.projectid?.join(', ') || '-' }}
+          }
+        </td>
+
+        <!-- Actions -->
+        <td>
+          @if (editingId === item.id) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(item)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

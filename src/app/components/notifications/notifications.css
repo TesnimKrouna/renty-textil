@@ -1,0 +1,102 @@
+.notifications-container {
+  padding: 2rem;
+  max-width: 600px;
+}
+
+.notifications-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.notifications-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.badge {
+  background: #dc2626;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.mark-all-read {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.mark-all-read:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notification-item {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 4px solid transparent;
+}
+
+.notification-item.unread {
+  background: #fefce8;
+  border-left-color: #e5c11a;
+}
+
+.notification-item:hover {
+  background: #f9fafb;
+}
+
+.notif-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.notif-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.notif-dot {
+  width: 8px;
+  height: 8px;
+  background: #e5c11a;
+  border-radius: 50%;
+}

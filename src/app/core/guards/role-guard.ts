@@ -1,18 +1,30 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
 
-export const roleGuard = (allowedRoles: string[]): CanActivateFn => {
-  return () => {
-    const auth = inject(AuthService);
-    const router = inject(Router);
-    const role = auth.getRole();
+@Injectable({ providedIn: 'root' })
+export class RoleGuard implements CanActivate {
 
-    if (role && allowedRoles.includes(role)) {
-      return true;
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    // Rôle requis passé via la propriété data de la route (ex: data: { role: 'ADMIN' })
+    const requiredRole = route.data?.['role'] as string;
+    const user = this.authService.getCurrentUser(); // ← plus de getRole()
+
+    if (!user) {
+      this.router.navigate(['/login']);
+      return false;
     }
 
-    router.navigateByUrl('/login');
+    // Un admin peut tout voir
+    if (user.role === 'ADMIN') return true;
+
+    // Vérifie si l'utilisateur possède exactement le rôle requis
+    if (requiredRole && user.role === requiredRole) return true;
+
+    // Sinon, redirige vers une page non autorisée ou login
+    this.router.navigate(['/unauthorized']);
     return false;
-  };
-};
+  }
+}

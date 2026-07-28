@@ -1,0 +1,289 @@
+/* ============================================
+   RENTY TEXTILE - SECTION FOURNISSEURS
+   ============================================ */
+
+/* --- Hôte du composant --- */
+:host {
+  display: block;
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: 100%;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+}
+
+/* --- Titre --- */
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   BARRE DE RECHERCHE
+   ============================================ */
+.search-bar {
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 380px;
+  height: 48px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 0 1.25rem;
+  font-size: 0.9375rem;
+  background: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 4px rgba(229, 193, 26, 0.2);
+}
+
+.search-bar input::placeholder {
+  color: #9ca3af;
+}
+
+/* ============================================
+   FORMULAIRE D'AJOUT
+   ============================================ */
+.add-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Boutons standardisés (Fermer / Enregistrer) */
+.btn-add-toggle,
+.btn-save {
+  height: 44px;
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.btn-add-toggle {
+  background: #e5c11a;
+  color: #1a1a1a;
+}
+
+.btn-add-toggle:hover {
+  background: #c9a818;
+  transform: translateY(-1px);
+}
+
+.btn-save {
+  background: #059669;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Formulaire d'ajout */
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* Chaque champ avec son label */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 200px;
+}
+
+.field span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Champs de saisie du formulaire */
+.field input {
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+}
+
+/* Bouton Enregistrer aligné en bas */
+.add-form .btn-save {
+  flex: 0 0 auto;
+  align-self: flex-end;
+}
+
+/* ============================================
+   TABLEAU
+   ============================================ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+thead tr {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+  text-align: left;
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover td {
+  background: #fafaf5;
+}
+
+/* ============================================
+   ÉDITION INLINE
+   ============================================ */
+td input {
+  width: 100%;
+  height: 36px;
+  padding: 0 0.6rem;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+td input:focus {
+  outline: none;
+  border-color: #e5c11a;
+  box-shadow: 0 0 0 3px rgba(229, 193, 26, 0.25);
+}
+
+/* Label invisible pour l'accessibilité en édition inline */
+.inline-field {
+  display: block;
+  width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ============================================
+   BOUTONS D'ACTION DANS LE TABLEAU
+   ============================================ */
+td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.35rem;
+  margin-right: 0.3rem;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
+}
+
+td button:hover {
+  background: #f3f4f6;
+  transform: scale(1.15);
+}
+
+td button:active {
+  transform: scale(0.95);
+}
+
+td button:first-child {
+  color: #059669;
+}
+
+td button:nth-child(2) {
+  color: #dc2626;
+}
+
+td button:last-child {
+  color: #e5c11a;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  :host {
+    padding: 1.5rem;
+  }
+  .search-bar input {
+    max-width: 100%;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .add-form {
+    padding: 1rem;
+  }
+  .field {
+    flex: 1 1 100%;
+  }
+}

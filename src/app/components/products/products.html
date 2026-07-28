@@ -1,0 +1,138 @@
+<h2>Liste des produits</h2>
+
+
+
+<!-- Barre de recherche -->
+<div class="search-bar">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="🔍 Rechercher par nom ou description..."
+  />
+</div>
+<!-- Bouton et formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un produit' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Nom</span>
+        <input type="text" [(ngModel)]="newProduct.name" placeholder="Nom du produit" />
+      </label>
+
+      <label class="field">
+        <span>Prix</span>
+        <input type="number" [(ngModel)]="newProduct.price" placeholder="Prix" />
+      </label>
+
+      <label class="field">
+        <span>Stock</span>
+        <input type="number" [(ngModel)]="newProduct.stock" placeholder="Stock" />
+      </label>
+
+      <label class="field">
+        <span>Description</span>
+        <input type="text" [(ngModel)]="newProduct.description" placeholder="Description" />
+      </label>
+
+      <label class="field">
+        <span>Image (URL)</span>
+        <input type="text" [(ngModel)]="newProduct.image" placeholder="URL de l'image" />
+      </label>
+
+      <button (click)="addProduct()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+
+<!-- Tableau des produits -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Prix</th>
+      <th>Stock</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (product of filteredProducts; track product.id) {
+      <tr>
+        <td>{{ product.id }}</td>
+
+        <!-- Nom -->
+        <td (dblclick)="startEdit(product)">
+          @if (editingId === product.id) {
+            <label class="inline-field">
+              <span class="sr-only">Nom</span>
+              <input type="text" [(ngModel)]="editProduct.name" />
+            </label>
+          } @else { {{ product.name }} }
+        </td>
+
+        <!-- Prix -->
+        <td (dblclick)="startEdit(product)">
+          @if (editingId === product.id) {
+            <label class="inline-field">
+              <span class="sr-only">Prix</span>
+              <input type="number" [(ngModel)]="editProduct.price" />
+            </label>
+          } @else { {{ product.price | currency:'EUR' }} }
+        </td>
+
+        <!-- Stock -->
+        <td (dblclick)="startEdit(product)">
+          @if (editingId === product.id) {
+            <label class="inline-field">
+              <span class="sr-only">Stock</span>
+              <input type="number" [(ngModel)]="editProduct.stock" />
+            </label>
+          } @else { {{ product.stock }} }
+        </td>
+
+        <!-- Description -->
+        <td (dblclick)="startEdit(product)">
+          @if (editingId === product.id) {
+            <label class="inline-field">
+              <span class="sr-only">Description</span>
+              <input type="text" [(ngModel)]="editProduct.description" />
+            </label>
+          } @else { {{ product.description || '-' }} }
+        </td>
+
+        <!-- Image -->
+        <td (dblclick)="startEdit(product)">
+          @if (editingId === product.id) {
+            <label class="inline-field">
+              <span class="sr-only">URL image</span>
+              <input type="text" [(ngModel)]="editProduct.image" placeholder="URL image" />
+            </label>
+          } @else {
+            @if (product.image) {
+              <img [src]="product.image" alt="aperçu" class="product-thumb" />
+            } @else {
+              <span class="no-image">Aucune</span>
+            }
+          }
+        </td>
+
+        <!-- Actions -->
+        <td>
+          @if (editingId === product.id) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(product)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+

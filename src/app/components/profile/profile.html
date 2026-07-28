@@ -1,0 +1,26 @@
+<div class="profile-container">
+  <h2>Mon Profil</h2>
+  
+  <div class="profile-card">
+    <div class="profile-avatar">👤</div>
+    
+    <div class="profile-details">
+      <div class="detail-row">
+        <span class="detail-label">Nom complet</span>
+        <span class="detail-value">{{ currentUser?.name || 'Non renseigné' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">{{ currentUser?.email || 'Non renseigné' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Rôle</span>
+        <span class="detail-value role-badge">{{ currentUser?.role || 'Non défini' }}</span>
+      </div>
+    </div>
+
+    <button class="logout-btn" (click)="logout()">🚪 Se déconnecter</button>
+  </div>
+</div>

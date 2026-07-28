@@ -1,1 +1,82 @@
-<p>dashboard works!</p>
+<div class="app-layout">
+  <!-- Barre supérieure -->
+<header class="topbar">
+  
+
+  <div class="topbar-search">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="🔍 Rechercher (produits, clients…)"
+      (keyup.enter)="onSearch()"
+    />
+  </div>
+
+  <div class="topbar-right">
+    <!-- Notifications -->
+    <button class="topbar-btn" title="Notifications" (click)="show('notifications')">
+      🔔
+    </button>
+
+    <!-- Profil -->
+    <button class="topbar-btn" title="Profil" (click)="show('profile')">
+      👤
+    </button>
+  </div>
+</header>
+
+  <!-- Dashboard (sidebar + contenu) -->
+  <div class="dashboard">
+    <!-- Barre latérale -->
+    <aside class="sidebar" [class.collapsed]="!sidebarOpen">
+      <div class="sidebar-header">
+        <h2>Renty Textile</h2>
+        <button class="toggle-btn" (click)="toggleSidebar()">✕</button>
+      </div>
+
+      @if (canShow('products')) {
+        <button (click)="show('products')" [class.active]="selectedSection === 'products'">Produits</button>
+      }
+      @if (canShow('projects')) {
+        <button (click)="show('projects')" [class.active]="selectedSection === 'projects'">Projets</button>
+      }
+      @if (canShow('suppliers')) {
+        <button (click)="show('suppliers')" [class.active]="selectedSection === 'suppliers'">Fournisseurs</button>
+      }
+      @if (canShow('clients')) {
+        <button (click)="show('clients')" [class.active]="selectedSection === 'clients'">Clients</button>
+      }
+      @if (canShow('credits')) {
+        <button (click)="show('credits')" [class.active]="selectedSection === 'credits'">Crédits</button>
+      }
+      @if (canShow('employes')) {
+        <button (click)="show('employes')" [class.active]="selectedSection === 'employes'">Employés</button>
+      }
+      @if (canShow('users')) {
+        <button (click)="show('users')" [class.active]="selectedSection === 'users'">Utilisateurs</button>
+      }
+      @if (canShow('invoice')) {
+        <button (click)="show('invoice')" [class.active]="selectedSection === 'invoice'">Factures</button>
+      }
+
+      <!-- Bouton Déconnexion en bas de la sidebar -->
+      <button class="logout-btn" (click)="logout()" title="Déconnexion">🚪 Déconnexion</button>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="content">
+      @if (!sidebarOpen) {
+        <button class="toggle-btn floating" (click)="toggleSidebar()">☰</button>
+      }
+
+      @if (selectedSection === 'products' && canShow('products')) { <app-products></app-products> }
+      @if (selectedSection === 'projects' && canShow('projects')) { <app-projects></app-projects> }
+      @if (selectedSection === 'suppliers' && canShow('suppliers')) { <app-suppliers></app-suppliers> }
+      @if (selectedSection === 'clients' && canShow('clients')) { <app-clients></app-clients> }
+      @if (selectedSection === 'credits' && canShow('credits')) { <app-credits></app-credits> }
+      @if (selectedSection === 'employes' && canShow('employes')) { <app-employes></app-employes> }
+      @if (selectedSection === 'users' && canShow('users')) { <app-users></app-users> }
+      @if (selectedSection === 'invoice' && canShow('invoice')) { <app-invoice></app-invoice> }
+    </main>
+  </div>
+</div>

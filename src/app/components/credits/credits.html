@@ -1,0 +1,122 @@
+<h2>Crédits</h2>
+
+<!-- Barre de recherche -->
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="🔍 Rechercher par client, projet ou méthode..." />
+</div>
+
+<!-- Formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un crédit' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Client ID</span>
+        <input type="number" [(ngModel)]="newCredit.clientId" placeholder="Client ID" />
+      </label>
+
+      <label class="field">
+        <span>Projet ID</span>
+        <input type="number" [(ngModel)]="newCredit.projectId" placeholder="Projet ID" />
+      </label>
+
+      <label class="field">
+        <span>Montant total</span>
+        <input type="number" [(ngModel)]="newCredit.totalAmount" placeholder="Montant total" />
+      </label>
+
+      <label class="field">
+        <span>Payé</span>
+        <input type="number" [(ngModel)]="newCredit.paidParts" placeholder="Payé" />
+      </label>
+
+      <label class="field">
+        <span>Impayé</span>
+        <input type="number" [(ngModel)]="newCredit.unpaidParts" placeholder="Impayé" />
+      </label>
+
+      <label class="field">
+        <span>Méthode de paiement</span>
+        <input type="text" [(ngModel)]="newCredit.paymentMethod" placeholder="Méthode de paiement" />
+      </label>
+
+      <button (click)="addCredit()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+
+<!-- Tableau des crédits -->
+<table>
+  <thead>
+    <tr>
+      <th>Client ID</th>
+      <th>Projet ID</th>
+      <th>Montant total</th>
+      <th>Payé</th>
+      <th>Impayé</th>
+      <th>Mode de paiement</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of filteredItems; track item.clientId + '-' + item.projectId) {
+      <tr>
+        <td>{{ item.clientId }}</td>
+        <td>{{ item.projectId }}</td>
+
+        <!-- Montant total -->
+        <td (dblclick)="startEdit(item)">
+          @if (isEditing(item)) {
+            <label class="inline-field">
+              <span class="sr-only">Montant total</span>
+              <input type="number" [(ngModel)]="editItem.totalAmount" />
+            </label>
+          } @else { {{ item.totalAmount | currency:'EUR' }} }
+        </td>
+
+        <!-- Payé -->
+        <td (dblclick)="startEdit(item)">
+          @if (isEditing(item)) {
+            <label class="inline-field">
+              <span class="sr-only">Payé</span>
+              <input type="number" [(ngModel)]="editItem.paidParts" />
+            </label>
+          } @else { {{ item.paidParts | currency:'EUR' }} }
+        </td>
+
+        <!-- Impayé -->
+        <td (dblclick)="startEdit(item)">
+          @if (isEditing(item)) {
+            <label class="inline-field">
+              <span class="sr-only">Impayé</span>
+              <input type="number" [(ngModel)]="editItem.unpaidParts" />
+            </label>
+          } @else { {{ item.unpaidParts | currency:'EUR' }} }
+        </td>
+
+        <!-- Mode de paiement -->
+        <td (dblclick)="startEdit(item)">
+          @if (isEditing(item)) {
+            <label class="inline-field">
+              <span class="sr-only">Mode de paiement</span>
+              <input type="text" [(ngModel)]="editItem.paymentMethod" />
+            </label>
+          } @else { {{ item.paymentMethod }} }
+        </td>
+
+        <!-- Actions -->
+        <td>
+          @if (isEditing(item)) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(item)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

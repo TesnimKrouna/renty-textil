@@ -3,32 +3,19 @@ import { Login } from './features/auth/login/login';
 import { Signup } from './features/auth/signup/signup';
 import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
 import { ResetPassword } from './features/auth/reset-password/reset-password';
+import { Dashboard } from './features/admin/dashboard/dashboard';
+import { RoleGuard } from './core/guards/role-guard';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: Login },
+  { path: 'signup', component: Signup },
+  { path: 'forgot-password', component: ForgotPassword },
+  { path: 'reset-password', component: ResetPassword },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-
-  {
-    path: 'login',
-    component: Login
-  },
-
-  {
-    path: 'signup',
-    component: Signup
-  },
-
-  {
-    path: 'forgot-password',
-    component: ForgotPassword
-  },
-
-  {
-    path: 'reset-password',
-    component: ResetPassword
+    path: 'dashboard',
+    component: Dashboard,
+    //canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'MANAGER_PRODUIT', 'MANAGER_FINANCE'] }
   }
-
 ];

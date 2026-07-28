@@ -1,0 +1,9 @@
+export interface Client {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  domain: string;
+  projectid: number[]; 
+}

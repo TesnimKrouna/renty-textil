@@ -1,0 +1,125 @@
+<h2>Employés</h2>
+
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="🔍 Rechercher un employé..." />
+</div>
+
+<!-- Formulaire d'ajout -->
+<div class="add-section">
+  <button (click)="toggleAddForm()" class="btn-add-toggle">
+    {{ showAddForm ? '✕ Fermer' : '＋ Ajouter un employé' }}
+  </button>
+
+  @if (showAddForm) {
+    <div class="add-form">
+      <label class="field">
+        <span>Nom complet</span>
+        <input type="text" [(ngModel)]="newEmploye.name" placeholder="Nom complet" />
+      </label>
+
+      <label class="field">
+        <span>Salaire</span>
+        <input type="number" [(ngModel)]="newEmploye.salary" placeholder="Salaire" />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" [(ngModel)]="newEmploye.mail" placeholder="Email" />
+      </label>
+
+      <label class="field">
+        <span>Poste</span>
+        <input type="text" [(ngModel)]="newEmploye.position" placeholder="Poste" />
+      </label>
+
+      <label class="field">
+        <span>Projet ID</span>
+        <input type="number" [(ngModel)]="newEmploye.projectId" placeholder="Projet ID" />
+      </label>
+
+      <button (click)="addEmploye()" class="btn-save">💾 Enregistrer</button>
+    </div>
+  }
+</div>
+
+<!-- Tableau des employés -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Salaire</th>
+      <th>Email</th>
+      <th>Poste</th>
+      <th>Projet ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of filteredItems; track item.id) {
+      <tr>
+        <td>{{ item.id }}</td>
+
+        <!-- Nom -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Nom</span>
+              <input type="text" [(ngModel)]="editItem.name" />
+            </label>
+          } @else { {{ item.name }} }
+        </td>
+
+        <!-- Salaire -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Salaire</span>
+              <input type="number" [(ngModel)]="editItem.salary" />
+            </label>
+          } @else { {{ item.salary | currency:'EUR' }} }
+        </td>
+
+        <!-- Email -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Email</span>
+              <input type="email" [(ngModel)]="editItem.mail" />
+            </label>
+          } @else { {{ item.mail }} }
+        </td>
+
+        <!-- Poste -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Poste</span>
+              <input type="text" [(ngModel)]="editItem.position" />
+            </label>
+          } @else { {{ item.position }} }
+        </td>
+
+        <!-- Projet ID -->
+        <td (dblclick)="startEdit(item)">
+          @if (editingId === item.id) {
+            <label class="inline-field">
+              <span class="sr-only">Projet ID</span>
+              <input type="number" [(ngModel)]="editItem.projectId" />
+            </label>
+          } @else { {{ item.projectId }} }
+        </td>
+
+        <!-- Actions -->
+        <td>
+          @if (editingId === item.id) {
+            <button (click)="saveEdit()" title="Sauvegarder">💾</button>
+            <button (click)="cancelEdit()" title="Annuler">❌</button>
+          } @else {
+            <button (click)="startEdit(item)" title="Modifier">✏️</button>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
